@@ -26,3 +26,17 @@ class UserSerializer(serializers.Serializer):
             return User.objects.create_superuser(**validated_data)
         else:
             return User.objects.create_user(**validated_data)
+
+    def update(self, instance, validated_data):
+        password = validated_data.get("password")
+
+        for key, value in validated_data.items():
+            if key != "password":
+                setattr(instance, key, value)
+
+        if password:
+            instance.set_password(password)
+
+        instance.save()
+
+        return instance
