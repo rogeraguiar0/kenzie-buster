@@ -1,16 +1,14 @@
 from rest_framework.views import APIView, Request, Response, status
-from users import serializers
 
 from .models import Movie
-from .serializers import MovieSerializer
-
-from .permissions import IsMovieOwner
+from .serializers import MovieSerializer, MovieOrderSerializer
 
 from users.permissions import IsAdminOrReadOnly
 
 from django.shortcuts import get_object_or_404
 
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 class MovieViews(APIView):
@@ -51,3 +49,17 @@ class MovieDetailViews(APIView):
 
         return Response(status=204)
     
+class MovieOrderDetailView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request: Request, movie_id: int) -> Response:
+        serializer = MovieOrderSerializer(data=request.data)
+
+        serializer.is_valid(raise_exception=True)
+
+        find_movie = get_object_or_404(Movie, pk=movie_id)
+
+        serializer.save(user=request.user, movie=find_movie)
+
+        return Response(serializer.data, status.HTTP_201_CREATED)
