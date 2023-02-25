@@ -1,25 +1,4 @@
-# M5 - Kenzie Buster
-
-## Instalação dos pacotes de teste
-
-- Verifique se os pacotes `pytest` e/ou `pytest-testdox` estão instalados globalmente em seu sistema:
-```shell
-pip list
-```
-- Caso seja listado o `pytest` e/ou `pytest-testdox` e/ou `pytest-django` em seu ambiente global, utilize os seguintes comando para desinstalá-los globalmente:
-```shell
-pip uninstall pytest
-```
-
-```shell
-pip uninstall pytest-testdox
-```
-
-```shell
-pip uninstall pytest-django
-```
-
-A partir disso, prossiga com os passos:
+Kenzie Buster
 
 1. Crie seu ambiente virtual:
 ```bash
@@ -40,14 +19,10 @@ source venv/bin/activate
 pip install pytest-testdox pytest-django
 ```
 
-5. Vá até o arquivo `pytest.ini` e modifique o nome do projeto `my_project_name.settings` para o nome do **seu_projeto**.settings (onde se encontra o settings.py)
-
 4. Agora é só rodar os testes no diretório principal do projeto:
 ```shell
 pytest --testdox -vvs
 ```
-
-
 
 ## Rodando os testes de cada tarefa isoladamente
 
